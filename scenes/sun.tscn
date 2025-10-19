@@ -23,5 +23,5 @@ material_override = SubResource("ShaderMaterial_6gpmc")
 mesh = SubResource("SphereMesh_vtvjq")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-omni_range = 4096.0
+omni_range = 4.68
 omni_attenuation = -10.0
