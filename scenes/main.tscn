@@ -1,0 +1,35 @@
+[gd_scene load_steps=8 format=3 uid="uid://4b73v4n6y0jj"]
+
+[ext_resource type="PackedScene" uid="uid://h604pogjucc2" path="res://scenes/earth.tscn" id="1_o5qli"]
+[ext_resource type="Texture2D" uid="uid://bqj865p7bc04x" path="res://textures/starmap_2020_4k.exr" id="2_0wfyh"]
+[ext_resource type="Script" uid="uid://c3hr82gg85y2u" path="res://scripts/camera_orbit.gd" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://dvd4qafixtdbg" path="res://scenes/sun.tscn" id="4_jyhfs"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_sugp2"]
+panorama = ExtResource("2_0wfyh")
+
+[sub_resource type="Sky" id="Sky_0wfyh"]
+sky_material = SubResource("PanoramaSkyMaterial_sugp2")
+
+[sub_resource type="Environment" id="Environment_sugp2"]
+background_mode = 2
+sky = SubResource("Sky_0wfyh")
+ambient_light_source = 1
+
+[node name="Root" type="Node3D"]
+
+[node name="Earth" parent="." instance=ExtResource("1_o5qli")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.002767, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
+transform = Transform3D(0.38803783, -0.081055336, 0.9180723, 0, 0.9961252, 0.08794652, -0.9216435, -0.034126576, 0.38653424, 3.9547806, 0.3788473, 1.6650738)
+script = ExtResource("2_sugp2")
+target = NodePath("../Sun")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sugp2")
+
+[node name="Sun" parent="." instance=ExtResource("4_jyhfs")]
+transform = Transform3D(4.25, 0, 0, 0, 4.25, 0, 0, 0, 4.25, 0, 0, 0)
+
+[editable path="Earth"]
