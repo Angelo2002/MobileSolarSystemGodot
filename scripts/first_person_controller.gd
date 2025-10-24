@@ -224,6 +224,8 @@ func _get_movement_input() -> Vector2:
 			var clamped_delta = delta.limit_length(joystick_radius)
 			# Normalize to -1 to 1 range
 			input = clamped_delta / joystick_radius
+			# Invert Y so dragging up (negative screen Y) moves forward (positive game Y)
+			input.y = -input.y
 
 	# Keyboard input (for desktop testing)
 	else:
