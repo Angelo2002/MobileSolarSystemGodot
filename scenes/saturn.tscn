@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dwndb4w8g4bov"]
+[gd_scene load_steps=9 format=3 uid="uid://dwndb4w8g4bov"]
 
 [ext_resource type="Texture2D" uid="uid://cw1odt0piara3" path="res://textures/celestial_bodies/other_planets/2k_saturn.jpg" id="1_3cjbg"]
 [ext_resource type="Shader" uid="uid://cruqycpt7lfea" path="res://shaders/saturn_rings.gdshader" id="2_4knx4"]
@@ -8,6 +8,8 @@
 albedo_texture = ExtResource("1_3cjbg")
 
 [sub_resource type="SphereMesh" id="SphereMesh_4knx4"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4knx4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jsrpf"]
 render_priority = 0
@@ -20,11 +22,18 @@ shader_parameter/outer_radius = 0.3030000143925
 
 [node name="Saturn" type="Node3D"]
 
-[node name="SaturnSurface" type="MeshInstance3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="SaturnSurface" type="MeshInstance3D" parent="StaticBody3D"]
 material_override = SubResource("StandardMaterial3D_ilg8d")
 mesh = SubResource("SphereMesh_4knx4")
+skeleton = NodePath("../..")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1.135, 0, 0, 0, 1.135, 0, 0, 0, 1.135, 0, 0, 0)
+shape = SubResource("SphereShape3D_4knx4")
+
+[node name="Rings" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.93, 0, 0, 0, 1.93, 0, 0, 0, 1.93, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_jsrpf")
 mesh = SubResource("PlaneMesh_3cjbg")

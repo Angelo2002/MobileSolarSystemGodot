@@ -6,11 +6,17 @@ extends Camera3D
 @export var min_distance: float = 2.0
 @export var max_distance: float = 50.0
 @export var mouse_sensitivity: float = 0.003
+@export var touch_sensitivity: float = 0.003
+@export var pinch_zoom_sensitivity: float = 0.05
 
 var distance: float = 10.0
 var rotation_x: float = 0.0
 var rotation_y: float = 0.0
 var is_rotating: bool = false
+
+# Touch tracking
+var touch_points: Dictionary = {}  # Stores active touch points
+var last_touch_distance: float = 0.0  # For pinch zoom
 
 func _ready():
 	if target:
@@ -34,10 +40,44 @@ func _input(event):
 			distance = clamp(distance + zoom_speed, min_distance, max_distance)
 
 	# Mouse motion for rotation
-	if event is InputEventMouseMotion and is_rotating:
+	elif event is InputEventMouseMotion and is_rotating:
 		rotation_y -= event.relative.x * mouse_sensitivity
 		rotation_x -= event.relative.y * mouse_sensitivity
 		rotation_x = clamp(rotation_x, -PI/2, PI/2)
+
+	# Touch input for mobile
+	elif event is InputEventScreenTouch:
+		if event.pressed:
+			# Touch started
+			touch_points[event.index] = event.position
+		else:
+			# Touch ended
+			touch_points.erase(event.index)
+
+		# Reset pinch tracking when touch count changes
+		if touch_points.size() != 2:
+			last_touch_distance = 0.0
+
+	elif event is InputEventScreenDrag:
+		# Update touch position
+		touch_points[event.index] = event.position
+
+		if touch_points.size() == 1:
+			# Single finger drag - rotate camera
+			rotation_y -= event.relative.x * touch_sensitivity
+			rotation_x -= event.relative.y * touch_sensitivity
+			rotation_x = clamp(rotation_x, -PI/2, PI/2)
+
+		elif touch_points.size() == 2:
+			# Two finger pinch - zoom
+			var touch_positions = touch_points.values()
+			var current_distance = touch_positions[0].distance_to(touch_positions[1])
+
+			if last_touch_distance > 0:
+				var delta = current_distance - last_touch_distance
+				distance = clamp(distance - delta * pinch_zoom_sensitivity, min_distance, max_distance)
+
+			last_touch_distance = current_distance
 
 func _process(delta):
 	if not target:
