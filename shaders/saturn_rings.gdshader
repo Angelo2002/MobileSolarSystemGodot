@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_disabled, unshaded;
+render_mode blend_mix, depth_prepass_alpha, cull_disabled;
 
 uniform sampler2D ring_texture : source_color;
 uniform float inner_radius : hint_range(0.0, 1.0) = 0.3;  // Inner hole
