@@ -4,12 +4,16 @@ render_mode blend_add, depth_draw_opaque, cull_front;
 // Atmosphere Colors
 uniform vec3 atmosphere_color : source_color = vec3(0.5, 0.7, 1.0);
 uniform vec3 sunset_color : source_color = vec3(1.0, 0.4, 0.2);
-uniform float atmosphere_intensity : hint_range(0.0, 5.0) = 1.5;
+
+// Separate Intensity Controls
+uniform float rim_intensity : hint_range(0.0, 5.0) = 0.3;  // General edge glow
+uniform float sunset_intensity : hint_range(0.0, 10.0) = 3.0;  // Sunset brightness (independent!)
 
 // Atmosphere Properties
 uniform float atmosphere_thickness : hint_range(0.0, 2.0) = 0.5;
 uniform float falloff : hint_range(0.1, 10.0) = 3.0;
 uniform float sunset_width : hint_range(0.0, 1.0) = 0.3;
+uniform float sunset_sharpness : hint_range(0.1, 5.0) = 2.0;  // How sharp the sunset band is
 
 // Advanced
 uniform bool use_sunset = true;
@@ -36,27 +40,35 @@ void fragment() {
     fresnel = pow(fresnel, fresnel_power);
 
     ALBEDO = atmosphere_color;
-    ALPHA = fresnel * atmosphere_intensity;
+    // Use rim_intensity for general edge glow (can be kept low)
+    ALPHA = fresnel * rim_intensity;
 }
 
 void light() {
     // Now we have access to actual LIGHT direction!
     float sun_alignment = dot(normalize(world_normal), LIGHT);
 
-    // Sunset band at terminator
+    // Sunset band at terminator (sharper control)
     float terminator = smoothstep(-sunset_width, sunset_width, sun_alignment);
     float sunset_band = 1.0 - abs(terminator * 2.0 - 1.0);
+    // Make sunset band sharper and more pronounced
+    sunset_band = pow(sunset_band, sunset_sharpness);
 
-    vec3 atmo_color = atmosphere_color;
+    // Calculate base rim glow contribution
+    float day_side_fade = smoothstep(-0.5, 0.5, sun_alignment);
+    float rim_alpha = ALPHA * day_side_fade;
+    rim_alpha = pow(rim_alpha, falloff);
+
+    // Calculate sunset contribution (SEPARATE from rim glow!)
+    float sunset_alpha = 0.0;
     if (use_sunset) {
-        atmo_color = mix(atmo_color, sunset_color, sunset_band * 0.7);
+        // Sunset only appears in the terminator band
+        sunset_alpha = sunset_band * sunset_intensity;
     }
 
-    // Fade on dark side
-    float day_side_fade = smoothstep(-0.5, 0.5, sun_alignment);
+    // Combine: base rim uses atmosphere_color, sunset adds sunset_color
+    vec3 rim_contribution = atmosphere_color * rim_alpha;
+    vec3 sunset_contribution = sunset_color * sunset_alpha;
 
-    float final_alpha = ALPHA * day_side_fade;
-    final_alpha = pow(final_alpha, falloff);
-
-    DIFFUSE_LIGHT += atmo_color * final_alpha * LIGHT_COLOR;
+    DIFFUSE_LIGHT += (rim_contribution + sunset_contribution) * LIGHT_COLOR;
 }
