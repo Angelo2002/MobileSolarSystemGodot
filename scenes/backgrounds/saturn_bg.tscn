@@ -1,0 +1,70 @@
+[gd_scene load_steps=13 format=3 uid="uid://caikovscmna3m"]
+
+[ext_resource type="Script" uid="uid://bxcd2n4r4a83i" path="res://scripts/camera_link.gd" id="1_pl1qn"]
+[ext_resource type="PackedScene" uid="uid://dwndb4w8g4bov" path="res://scenes/celestial_bodies/saturn.tscn" id="2_3t8jl"]
+[ext_resource type="Script" uid="uid://mynxlpyy7ugl" path="res://scripts/planet_positioning.gd" id="3_2nx0u"]
+[ext_resource type="Texture2D" uid="uid://bqj865p7bc04x" path="res://textures/sky_maps/starmap_2020_4k.exr" id="4_dhmct"]
+[ext_resource type="Script" uid="uid://c8luh6x83sbe1" path="res://scripts/rotating_skybox.gd" id="5_12gjn"]
+[ext_resource type="Script" uid="uid://bhwa8e30rdsfs" path="res://scripts/sun_light_sync.gd" id="6_12gjn"]
+[ext_resource type="Script" uid="uid://cd0p327cyoo1q" path="res://scripts/sun_orbit_controller.gd" id="7_vfop5"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_vfop5"]
+panorama = ExtResource("4_dhmct")
+
+[sub_resource type="Sky" id="Sky_pcm3g"]
+sky_material = SubResource("PanoramaSkyMaterial_vfop5")
+
+[sub_resource type="Environment" id="Environment_h855p"]
+background_mode = 2
+sky = SubResource("Sky_pcm3g")
+ambient_light_source = 3
+ambient_light_sky_contribution = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h855p"]
+emission_enabled = true
+emission = Color(1, 1, 0, 1)
+emission_energy_multiplier = 5.4
+
+[sub_resource type="SphereMesh" id="SphereMesh_prymm"]
+material = SubResource("StandardMaterial3D_h855p")
+
+[node name="SaturnBG" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1.0000007, 0, 0, 0, 1, 0, 0, 0, 0.99999934, 0, 0.001, -0.135)
+script = ExtResource("1_pl1qn")
+rotation_offset_x = -14.0
+
+[node name="Saturn" parent="." instance=ExtResource("2_3t8jl")]
+transform = Transform3D(1, 0, 0, 0, 0.9999983, -0.001745328, 0, 0.001745328, 0.9999983, 0, 0, -2.2619631)
+script = ExtResource("3_2nx0u")
+distance_from_surface = 70.0
+apparent_size_degrees = 47.0
+mesh_diameter = 1.0
+rotation_axis = Vector3(0, -0.2, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_h855p")
+script = ExtResource("5_12gjn")
+rotation_speed_x = 0.0
+rotation_speed_y = 8.0
+rotation_speed_z = 0.0
+
+[node name="Sun" type="Node3D" parent="WorldEnvironment" node_paths=PackedStringArray("skybox")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 120, 0, 0)
+script = ExtResource("7_vfop5")
+skybox = NodePath("..")
+orbit_enabled = false
+orbital_speed_y = 0.0
+orbit_distance = 120.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldEnvironment/Sun"]
+mesh = SubResource("SphereMesh_prymm")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." node_paths=PackedStringArray("background_sun")]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.97113425, 0.23853344, 0, -0.23853345, 0.9711342, 0, 0.6522342, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 8192.0
+script = ExtResource("6_12gjn")
+background_sun = NodePath("../WorldEnvironment/Sun")
+invert_direction = true

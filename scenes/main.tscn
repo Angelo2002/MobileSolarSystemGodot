@@ -17,7 +17,7 @@ sky_material = SubResource("PanoramaSkyMaterial_sugp2")
 [sub_resource type="Environment" id="Environment_sugp2"]
 background_mode = 2
 sky = SubResource("Sky_0wfyh")
-sky_custom_fov = 131.3
+sky_custom_fov = 60.0
 ambient_light_source = 1
 
 [node name="Root" type="Node3D"]
@@ -43,11 +43,15 @@ environment = SubResource("Environment_sugp2")
 [node name="Sun" parent="." instance=ExtResource("4_jyhfs")]
 transform = Transform3D(4.25, 0, 0, 0, 4.25, 0, 0, 0, 4.25, 0, 0, 0)
 
-[node name="Saturn" parent="." node_paths=PackedStringArray("clickable_mesh") instance=ExtResource("5_tbgi4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8924665, 0, 6.7107577)
+[node name="Saturn" parent="." node_paths=PackedStringArray("orbit_target") instance=ExtResource("5_tbgi4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.892, 0, 22.789)
+script = ExtResource("2_tipki")
+orbit_target = NodePath("../Sun")
+
+[node name="StaticBody3D" parent="Saturn" index="0" node_paths=PackedStringArray("clickable_mesh")]
 script = ExtResource("6_tefeu")
-target_scene = "uid://1gu876quwbty"
-clickable_mesh = NodePath("StaticBody3D/SaturnSurface")
+target_scene = "uid://deinsgylv0y2l"
+clickable_mesh = NodePath("SaturnSurface")
 
 [editable path="Earth"]
 [editable path="Saturn"]

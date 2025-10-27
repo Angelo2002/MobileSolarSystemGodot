@@ -1,0 +1,85 @@
+[gd_scene load_steps=12 format=3 uid="uid://dwndb4w8g4bov"]
+
+[ext_resource type="Texture2D" uid="uid://cw1odt0piara3" path="res://textures/celestial_bodies/other_planets/2k_saturn.jpg" id="1_3cjbg"]
+[ext_resource type="Shader" uid="uid://crmfj7rjx2gn1" path="res://shaders/saturn_surface.gdshader" id="1_h8vn7"]
+[ext_resource type="Shader" uid="uid://cruqycpt7lfea" path="res://shaders/saturn_rings.gdshader" id="2_4knx4"]
+[ext_resource type="Shader" uid="uid://bvf40w2oqmi6u" path="res://shaders/atmosphere.gdshader" id="2_y4s23"]
+[ext_resource type="Texture2D" uid="uid://c2y1w5hahuqpb" path="res://textures/celestial_bodies/other_planets/2k_saturn_ring_alpha.png" id="3_6oyq6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hmrde"]
+render_priority = 0
+shader = ExtResource("1_h8vn7")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("1_3cjbg")
+shader_parameter/albedo_texture_size = Vector2i(2048, 1024)
+shader_parameter/point_size = 0.10000000149012
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/meteor_enabled = true
+shader_parameter/meteor_min_size = 0.01
+shader_parameter/meteor_max_size = 0.01
+shader_parameter/meteor_frequency = 0.1
+shader_parameter/meteor_color = Color(1.5, 0.8, 0.3, 1)
+shader_parameter/meteor_intensity = 2.0
+shader_parameter/meteor_flash_duration = 0.2
+shader_parameter/lightning_enabled = false
+shader_parameter/lightning_min_size = 0.015
+shader_parameter/lightning_max_size = 0.04
+shader_parameter/lightning_frequency = 0.10000000149012
+shader_parameter/lightning_color = Color(0.5, 0.7, 2.5, 1)
+shader_parameter/lightning_intensity = 9.80000014603176
+shader_parameter/lightning_flash_duration = 0.1
+shader_parameter/lightning_strike_count = 8.0
+shader_parameter/lightning_cluster_radius = 0.00999999977648
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h8vn7"]
+render_priority = 0
+shader = ExtResource("2_y4s23")
+shader_parameter/atmosphere_color = Color(0.0044353534, 0.002677755, 0.00093636644, 1)
+shader_parameter/sunset_color = Color(12.117693, 5.194834, 2.8872147, 1)
+shader_parameter/rim_intensity = 0.13200000627
+shader_parameter/sunset_intensity = 10.0
+shader_parameter/atmosphere_thickness = 0.04400000209
+shader_parameter/falloff = 3.0
+shader_parameter/sunset_width = 0.290000013775
+shader_parameter/sunset_sharpness = 2.80200012983512
+shader_parameter/use_sunset = true
+shader_parameter/fresnel_power = 2.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_4knx4"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4knx4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jsrpf"]
+render_priority = 0
+shader = ExtResource("2_4knx4")
+shader_parameter/ring_texture = ExtResource("3_6oyq6")
+shader_parameter/inner_radius = 0.10000000475
+shader_parameter/outer_radius = 0.2430000115425
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_3cjbg"]
+
+[node name="Saturn" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="SaturnSurface" type="MeshInstance3D" parent="StaticBody3D"]
+material_override = SubResource("ShaderMaterial_hmrde")
+material_overlay = SubResource("ShaderMaterial_h8vn7")
+mesh = SubResource("SphereMesh_4knx4")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1.135, 0, 0, 0, 1.135, 0, 0, 0, 1.135, 0, 0, 0)
+shape = SubResource("SphereShape3D_4knx4")
+
+[node name="Rings" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.515, 0, 0, 0, 2.515, 0, 0, 0, 2.515, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_jsrpf")
+mesh = SubResource("PlaneMesh_3cjbg")
