@@ -21,7 +21,7 @@ transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0,
 shape = SubResource("ConcavePolygonShape3D_pcm3g")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(1.0000045, 0, -1.950073e-05, 0, 1, 0, 1.950073e-05, 0, 1.0000045, -2.7990022, 10.175797, 11.429635)
+transform = Transform3D(1.0000045, 0, -1.950073e-05, 0, 1, 0, 1.950073e-05, 0, 1.0000045, -2.7990766, 10.175797, 11.429889)
 script = ExtResource("4_ihwfl")
 movement_radius = 35.72
 
@@ -30,8 +30,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47231007, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 shape = SubResource("CapsuleShape3D_4ye4w")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.9999902, 0.0029858607, 0.0033124539, -0.0029858584, -0.10343479, 0.99463195, 0.003312456, -0.9946318, -0.103424914, 0, 28.860054, 0)
 
 [editable path="SaturnAsteroid"]
