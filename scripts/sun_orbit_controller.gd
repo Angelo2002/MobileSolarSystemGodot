@@ -96,3 +96,6 @@ func _process(delta: float) -> void:
 
 	# Apply the calculated orbital position
 	global_position = new_position
+
+	# Update global sun direction for cross-viewport synchronization
+	GlobalSun.update_sun_direction(global_position)

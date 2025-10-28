@@ -15,6 +15,10 @@ run/main_scene="uid://4b73v4n6y0jj"
 config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GlobalSun="*res://scripts/global_sun.gd"
+
 [rendering]
 
 renderer/rendering_method="mobile"

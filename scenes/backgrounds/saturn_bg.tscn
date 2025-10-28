@@ -53,10 +53,10 @@ rotation_speed_z = 0.0
 [node name="Sun" type="Node3D" parent="WorldEnvironment" node_paths=PackedStringArray("skybox")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 120, 0, 0)
 script = ExtResource("7_vfop5")
-skybox = NodePath("..")
 orbit_enabled = false
 orbital_speed_y = 0.0
 orbit_distance = 120.0
+skybox = NodePath("..")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="WorldEnvironment/Sun"]
 mesh = SubResource("SphereMesh_prymm")

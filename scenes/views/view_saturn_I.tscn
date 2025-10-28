@@ -1,10 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://deinsgylv0y2l"]
+[gd_scene load_steps=5 format=3 uid="uid://deinsgylv0y2l"]
 
 [ext_resource type="PackedScene" uid="uid://caikovscmna3m" path="res://scenes/backgrounds/saturn_bg.tscn" id="1_67j3s"]
+[ext_resource type="Script" uid="uid://dtkmgcqsn7ifo" path="res://scripts/eclipse_light_controller.gd" id="1_ttq3p"]
 [ext_resource type="PackedScene" uid="uid://1gu876quwbty" path="res://scenes/land/saturn_I.tscn" id="2_fjesa"]
-[ext_resource type="Script" uid="uid://bhwa8e30rdsfs" path="res://scripts/sun_light_sync.gd" id="3_fjesa"]
+[ext_resource type="Script" uid="uid://bi7r0f4tpj7or" path="res://scripts/synced_directional_light.gd" id="3_mc7ij"]
 
-[node name="view_saturn_I" type="Node3D"]
+[node name="view_saturn_I" type="Node3D" node_paths=PackedStringArray("sky_occluder", "surface", "foreground_light")]
+script = ExtResource("1_ttq3p")
+sky_occluder = NodePath("SubViewportContainer/SubViewport/SaturnBG/Saturn/StaticBody3D/SaturnSurface")
+surface = NodePath("SubViewportContainer2/SubViewport/SaturnView/SaturnAsteroid/Plane")
+foreground_light = NodePath("SubViewportContainer2/SubViewport/DirectionalLight3D")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 anchors_preset = 15
@@ -26,6 +31,9 @@ render_target_update_mode = 4
 
 [node name="Camera3D" parent="SubViewportContainer/SubViewport/SaturnBG" index="0" node_paths=PackedStringArray("target_camera")]
 target_camera = NodePath("../../../../SubViewportContainer2/SubViewport/SaturnView/CharacterBody3D/Camera3D")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("3_mc7ij")
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="."]
 anchors_preset = 15
@@ -49,16 +57,12 @@ render_target_update_mode = 4
 [node name="SaturnView" parent="SubViewportContainer2/SubViewport" instance=ExtResource("2_fjesa")]
 
 [node name="CharacterBody3D" parent="SubViewportContainer2/SubViewport/SaturnView" index="1"]
-transform = Transform3D(1.0000045, 0, -1.950073e-05, 0, 1, 0, 1.950073e-05, 0, 1.0000045, -17.504244, 10.786594, 5.58674)
+transform = Transform3D(1.0000045, 0, -1.950073e-05, 0, 1, 0, 1.950073e-05, 0, 1.0000045, -17.556494, 11.032812, 6.0697513)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." node_paths=PackedStringArray("background_sun")]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.97113425, 0.23853344, 0, -0.23853345, 0.9711342, 0, 0.6522342, 0)
-shadow_enabled = true
-directional_shadow_max_distance = 8192.0
-script = ExtResource("3_fjesa")
-background_sun = NodePath("../SubViewportContainer/SubViewport/SaturnBG/WorldEnvironment/Sun")
-invert_direction = true
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer2/SubViewport"]
+script = ExtResource("3_mc7ij")
 
 [editable path="SubViewportContainer/SubViewport/SaturnBG"]
+[editable path="SubViewportContainer/SubViewport/SaturnBG/Saturn"]
 [editable path="SubViewportContainer2/SubViewport/SaturnView"]
 [editable path="SubViewportContainer2/SubViewport/SaturnView/SaturnAsteroid"]
