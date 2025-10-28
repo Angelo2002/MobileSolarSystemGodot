@@ -21,7 +21,8 @@ func update_sun_direction(new_direction: Vector3) -> void:
 ## @param observer_pos: Position of the surface being lit (e.g., moon position)
 ## @param occluder_pos: Position of the object blocking light (e.g., Saturn position)
 ## @param occluder_radius: Visual radius of the occluder for eclipse penumbra
-func calculate_eclipse(observer_pos: Vector3, occluder_pos: Vector3, occluder_radius: float = 1.0) -> float:
+## @param penumbra_softness: Multiplier for penumbra size (1.0 = sharp, 1.5 = soft, 2.0 = very soft)
+func calculate_eclipse(observer_pos: Vector3, occluder_pos: Vector3, occluder_radius: float = 1.0, penumbra_softness: float = 1.5) -> float:
 	# Direction from observer to occluder
 	var to_occluder = occluder_pos - observer_pos
 	var distance_to_occluder = to_occluder.length()
@@ -38,8 +39,8 @@ func calculate_eclipse(observer_pos: Vector3, occluder_pos: Vector3, occluder_ra
 	# angular_radius ≈ arctan(radius / distance) for small angles
 	var angular_radius = atan(occluder_radius / distance_to_occluder)
 
-	# Add a soft penumbra region (1.5x the angular radius for smooth transition)
-	var eclipse_threshold = angular_radius * 1.5
+	# Add a soft penumbra region (multiplied by softness parameter)
+	var eclipse_threshold = angular_radius * penumbra_softness
 
 	if angle < angular_radius:
 		# Full eclipse - occluder completely blocks sun
