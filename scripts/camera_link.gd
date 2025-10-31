@@ -13,7 +13,15 @@ extends Camera3D
 @export var rotation_offset_z: float = 0.0
 
 func _process(_delta: float) -> void:
+	if not is_inside_tree():
+		print("ERROR: camera_link.gd _process() - camera node not in tree yet")
+		return
+
 	if not target_camera:
+		return
+
+	if not target_camera.is_inside_tree():
+		print("ERROR: camera_link.gd _process() - target_camera not in tree yet")
 		return
 
 	# Copy rotation from target camera

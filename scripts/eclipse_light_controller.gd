@@ -51,6 +51,11 @@ func get_occluder_visual_radius() -> float:
 		push_warning("Eclipse: Could not find mesh on sky_occluder, using manual radius")
 		return occluder_radius
 
+	# Check if mesh_instance is in the scene tree before accessing global_transform
+	if not mesh_instance.is_inside_tree():
+		print("ERROR: eclipse_light_controller.gd get_occluder_visual_radius() - mesh_instance not in tree yet")
+		return occluder_radius
+
 	# Get mesh AABB and calculate bounding sphere radius
 	var aabb = mesh_instance.mesh.get_aabb()
 	var mesh_radius = aabb.size.length() / 2.0  # Half diagonal = bounding sphere radius
@@ -64,7 +69,22 @@ func get_occluder_visual_radius() -> float:
 	return cached_radius
 
 func _process(_delta: float) -> void:
+	if not is_inside_tree():
+		print("ERROR: eclipse_light_controller.gd _process() - controller not in tree yet")
+		return
+
 	if not sky_occluder or not surface or not foreground_light:
+		return
+
+	# Check that referenced nodes are in the tree before accessing global positions
+	if not sky_occluder.is_inside_tree():
+		print("ERROR: eclipse_light_controller.gd _process() - sky_occluder not in tree yet")
+		return
+	if not surface.is_inside_tree():
+		print("ERROR: eclipse_light_controller.gd _process() - surface not in tree yet")
+		return
+	if not foreground_light.is_inside_tree():
+		print("ERROR: eclipse_light_controller.gd _process() - foreground_light not in tree yet")
 		return
 
 	# Get world positions

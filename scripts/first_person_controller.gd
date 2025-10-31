@@ -16,19 +16,10 @@ extends CharacterBody3D
 
 @export_group("Boundary")
 @export var enable_boundary: bool = true
-@export var movement_radius: float = 50.0:
-	set(value):
-		movement_radius = value
-		_update_boundary_visual()
-@export var boundary_center: Vector3 = Vector3.ZERO:
-	set(value):
-		boundary_center = value
-		_update_boundary_visual()
-@export var show_boundary_in_game: bool = false
+@export var movement_radius: float = 50.0
+@export var boundary_center: Vector3 = Vector3.ZERO
 
 @onready var camera: Camera3D = $Camera3D
-
-var boundary_visual: MeshInstance3D
 
 var rotation_x: float = 0.0
 var rotation_y: float = 0.0
@@ -49,78 +40,6 @@ func _ready():
 		camera = Camera3D.new()
 		add_child(camera)
 		camera.name = "Camera3D"
-
-	# Create boundary visualization
-	_create_boundary_visual()
-
-func _create_boundary_visual():
-	# Remove existing visual if it exists
-	if boundary_visual:
-		boundary_visual.queue_free()
-
-	# Get the scene root to add the visual as an independent object
-	var root = get_tree().get_edited_scene_root() if Engine.is_editor_hint() else get_tree().root
-	if not root:
-		return
-
-	# Create a semi-transparent sphere to show the movement boundary
-	boundary_visual = MeshInstance3D.new()
-	boundary_visual.name = "BoundaryVisual_" + name
-
-	# Add to scene root so it stays in place
-	root.add_child(boundary_visual)
-	boundary_visual.owner = root if Engine.is_editor_hint() else null
-
-	# Set as top-level so it ignores parent transforms
-	boundary_visual.top_level = true
-
-	# Create sphere mesh
-	var sphere_mesh = SphereMesh.new()
-	sphere_mesh.radius = movement_radius
-	sphere_mesh.height = movement_radius * 2.0
-	sphere_mesh.radial_segments = 32
-	sphere_mesh.rings = 16
-	boundary_visual.mesh = sphere_mesh
-
-	# Create semi-transparent material
-	var material = StandardMaterial3D.new()
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	material.albedo_color = Color(0.3, 0.6, 1.0, 0.15)  # Light blue, very transparent
-	material.cull_mode = BaseMaterial3D.CULL_DISABLED  # Show from inside and outside
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED  # No lighting
-	boundary_visual.material_override = material
-
-	# Position at boundary center
-	boundary_visual.global_position = boundary_center
-
-	# Hide in game unless specified
-	if not Engine.is_editor_hint():
-		boundary_visual.visible = show_boundary_in_game
-
-func _update_boundary_visual():
-	if not boundary_visual or not is_instance_valid(boundary_visual):
-		if Engine.is_editor_hint():
-			_create_boundary_visual()
-		return
-
-	# Update sphere size
-	if boundary_visual.mesh is SphereMesh:
-		boundary_visual.mesh.radius = movement_radius
-		boundary_visual.mesh.height = movement_radius * 2.0
-
-	# Update position
-	boundary_visual.global_position = boundary_center
-
-# Update visualization in editor when properties change
-func _process(_delta):
-	if Engine.is_editor_hint():
-		if boundary_visual and is_instance_valid(boundary_visual):
-			boundary_visual.global_position = boundary_center
-
-# Clean up the boundary visual when node is removed
-func _exit_tree():
-	if boundary_visual and is_instance_valid(boundary_visual):
-		boundary_visual.queue_free()
 
 func _input(event):
 	# Handle mouse input for desktop testing
@@ -167,6 +86,10 @@ func _rotate_camera(delta: Vector2):
 	camera.rotation.x = rotation_x
 
 func _physics_process(delta):
+	if not is_inside_tree():
+		print("ERROR: first_person_controller.gd _physics_process() - node not in tree yet")
+		return
+
 	# Get movement input
 	var input_dir = _get_movement_input()
 
