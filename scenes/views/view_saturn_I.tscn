@@ -10,6 +10,9 @@ script = ExtResource("1_ttq3p")
 sky_occluder = NodePath("SubViewportContainer/SubViewport/SaturnBG/Saturn/StaticBody3D/SaturnSurface")
 surface = NodePath("SubViewportContainer2/SubViewport/SaturnView/SaturnAsteroid/Plane")
 foreground_light = NodePath("SubViewportContainer2/SubViewport/DirectionalLight3D")
+auto_calculate_radius = false
+occluder_radius = 35.0
+penumbra_softness = 1.3
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 anchors_preset = 15
@@ -57,7 +60,8 @@ render_target_update_mode = 4
 [node name="SaturnView" parent="SubViewportContainer2/SubViewport" instance=ExtResource("2_fjesa")]
 
 [node name="CharacterBody3D" parent="SubViewportContainer2/SubViewport/SaturnView" index="1"]
-transform = Transform3D(1.0000045, 0, -1.950073e-05, 0, 1, 0, 1.950073e-05, 0, 1.0000045, -17.556494, 11.032812, 6.0697513)
+transform = Transform3D(1.0000045, 0, -1.950073e-05, 0, 1, 0, 1.950073e-05, 0, 1.0000045, -17.028461, 11.097597, 6.460062)
+velocity = Vector3(-9.750321e-05, 0, 5)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer2/SubViewport"]
 script = ExtResource("3_mc7ij")
