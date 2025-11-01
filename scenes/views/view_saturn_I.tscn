@@ -5,14 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://1gu876quwbty" path="res://scenes/land/saturn_I.tscn" id="2_fjesa"]
 [ext_resource type="Script" uid="uid://bi7r0f4tpj7or" path="res://scripts/synced_directional_light.gd" id="3_mc7ij"]
 
-[node name="view_saturn_I" type="Node3D" node_paths=PackedStringArray("sky_occluder", "surface", "foreground_light")]
+[node name="view_saturn_I" type="Node3D" node_paths=PackedStringArray("sky_occluder", "background_camera", "foreground_light")]
 script = ExtResource("1_ttq3p")
 sky_occluder = NodePath("SubViewportContainer/SubViewport/SaturnBG/Saturn/StaticBody3D/SaturnSurface")
-surface = NodePath("SubViewportContainer2/SubViewport/SaturnView/SaturnAsteroid/Plane")
+background_camera = NodePath("SubViewportContainer/SubViewport/SaturnBG/Camera3D")
 foreground_light = NodePath("SubViewportContainer2/SubViewport/DirectionalLight3D")
 auto_calculate_radius = false
 occluder_radius = 35.0
-penumbra_softness = 1.3
+penumbra_softness = 1.5
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 anchors_preset = 15
@@ -57,16 +57,12 @@ handle_input_locally = false
 size = Vector2i(1953, 1182)
 render_target_update_mode = 4
 
-[node name="SaturnView" parent="SubViewportContainer2/SubViewport" instance=ExtResource("2_fjesa")]
-
-[node name="CharacterBody3D" parent="SubViewportContainer2/SubViewport/SaturnView" index="1"]
-transform = Transform3D(1.0000045, 0, -1.950073e-05, 0, 1, 0, 1.950073e-05, 0, 1.0000045, -17.028461, 11.097597, 6.460062)
-velocity = Vector3(-9.750321e-05, 0, 5)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer2/SubViewport"]
 script = ExtResource("3_mc7ij")
+
+[node name="SaturnView" parent="SubViewportContainer2/SubViewport" instance=ExtResource("2_fjesa")]
 
 [editable path="SubViewportContainer/SubViewport/SaturnBG"]
 [editable path="SubViewportContainer/SubViewport/SaturnBG/Saturn"]
 [editable path="SubViewportContainer2/SubViewport/SaturnView"]
-[editable path="SubViewportContainer2/SubViewport/SaturnView/SaturnAsteroid"]
+[editable path="SubViewportContainer2/SubViewport/SaturnView/Saturn_I"]

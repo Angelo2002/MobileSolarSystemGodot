@@ -6,8 +6,8 @@ extends Node3D
 @export_group("Scene References")
 ## The celestial body in the sky that can block the sun (e.g., Saturn when on moon surface)
 @export var sky_occluder: Node3D
-## The surface being lit (typically the landing site/moon)
-@export var surface: Node3D
+## The camera in the background viewport (used to calculate direction to occluder)
+@export var background_camera: Camera3D
 ## The DirectionalLight in the foreground viewport that lights the surface
 @export var foreground_light: DirectionalLight3D
 
@@ -51,51 +51,44 @@ func get_occluder_visual_radius() -> float:
 		push_warning("Eclipse: Could not find mesh on sky_occluder, using manual radius")
 		return occluder_radius
 
-	# Check if mesh_instance is in the scene tree before accessing global_transform
-	if not mesh_instance.is_inside_tree():
-		print("ERROR: eclipse_light_controller.gd get_occluder_visual_radius() - mesh_instance not in tree yet")
-		return occluder_radius
-
 	# Get mesh AABB and calculate bounding sphere radius
 	var aabb = mesh_instance.mesh.get_aabb()
 	var mesh_radius = aabb.size.length() / 2.0  # Half diagonal = bounding sphere radius
 
 	# Apply global scale
-	var global_scale = mesh_instance.global_transform.basis.get_scale()
-	var avg_scale = (global_scale.x + global_scale.y + global_scale.z) / 3.0
+	var _global_scale = mesh_instance.global_transform.basis.get_scale()
+	var avg_scale = (_global_scale.x + _global_scale.y + _global_scale.z) / 3.0
 
 	cached_radius = mesh_radius * avg_scale
 	print("Eclipse: Auto-calculated occluder radius = ", cached_radius)
 	return cached_radius
 
 func _process(_delta: float) -> void:
-	if not is_inside_tree():
-		print("ERROR: eclipse_light_controller.gd _process() - controller not in tree yet")
+	if not sky_occluder or not background_camera or not foreground_light:
 		return
 
-	if not sky_occluder or not surface or not foreground_light:
-		return
-
-	# Check that referenced nodes are in the tree before accessing global positions
-	if not sky_occluder.is_inside_tree():
-		print("ERROR: eclipse_light_controller.gd _process() - sky_occluder not in tree yet")
-		return
-	if not surface.is_inside_tree():
-		print("ERROR: eclipse_light_controller.gd _process() - surface not in tree yet")
-		return
-	if not foreground_light.is_inside_tree():
-		print("ERROR: eclipse_light_controller.gd _process() - foreground_light not in tree yet")
-		return
-
-	# Get world positions
-	var surface_pos = surface.global_position
+	# Calculate direction from background camera to occluder (both in same viewport world)
+	var camera_pos = background_camera.global_position
 	var occluder_pos = sky_occluder.global_position
+	var to_occluder = occluder_pos - camera_pos
+	var distance_to_occluder = to_occluder.length()
+
+	if distance_to_occluder < 0.001:
+		# Camera inside occluder - full eclipse
+		foreground_light.light_energy = min_eclipse_brightness
+		return
+
+	# Normalize to get direction
+	var to_occluder_dir = to_occluder / distance_to_occluder
 
 	# Get the effective occluder radius (auto-calculated or manual)
 	var effective_radius = get_occluder_visual_radius()
 
-	# Calculate eclipse amount (0.0 = no eclipse, 1.0 = full eclipse)
-	var eclipse_amount = GlobalSun.calculate_eclipse(surface_pos, occluder_pos, effective_radius, penumbra_softness)
+	# Calculate angular size of the occluder from camera's perspective
+	var angular_radius = atan(effective_radius / distance_to_occluder)
+
+	# Calculate eclipse amount using direction-based method (works across viewport boundaries)
+	var eclipse_amount = GlobalSun.calculate_eclipse_from_direction(to_occluder_dir, angular_radius, penumbra_softness)
 
 	# Modulate light energy based on eclipse
 	# Full sunlight when eclipse_amount = 0.0

@@ -1,4 +1,3 @@
-@tool
 extends CharacterBody3D
 
 # First-person camera controller with mobile touch controls

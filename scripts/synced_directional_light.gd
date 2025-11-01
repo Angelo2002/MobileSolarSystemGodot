@@ -10,10 +10,6 @@ extends DirectionalLight3D
 @export var rotation_offset: Vector3 = Vector3.ZERO
 
 func _process(_delta: float) -> void:
-	if not is_inside_tree():
-		print("ERROR: synced_directional_light.gd _process() - node not in tree yet")
-		return
-
 	# Get the global sun direction from autoload
 	var sun_dir = GlobalSun.sun_direction
 

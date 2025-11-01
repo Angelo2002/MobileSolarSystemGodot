@@ -31,10 +31,6 @@ var orbit_initialized: bool = false
 var orbital_offset: Vector3 = Vector3.ZERO
 
 func _process(delta: float) -> void:
-	if not is_inside_tree():
-		print("ERROR: sun_orbit_controller.gd _process() - node not in tree yet")
-		return
-
 	# Initialize orbit parameters from starting position on first frame
 	if not orbit_initialized:
 		initial_position = global_position
