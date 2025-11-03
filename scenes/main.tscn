@@ -1,15 +1,15 @@
 [gd_scene load_steps=11 format=3 uid="uid://4b73v4n6y0jj"]
 
 [ext_resource type="PackedScene" uid="uid://h604pogjucc2" path="res://scenes/celestial_bodies/earth.tscn" id="1_o5qli"]
-[ext_resource type="Texture2D" uid="uid://bqj865p7bc04x" path="res://textures/sky_maps/starmap_2020_4k.exr" id="2_0wfyh"]
 [ext_resource type="Script" uid="uid://c3hr82gg85y2u" path="res://scripts/camera_orbit.gd" id="2_sugp2"]
 [ext_resource type="Script" uid="uid://bxpq41jfsdahw" path="res://scripts/planet_orbit.gd" id="2_tipki"]
 [ext_resource type="PackedScene" uid="uid://dvd4qafixtdbg" path="res://scenes/celestial_bodies/sun.tscn" id="4_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://cltaq6w68lodb" path="res://textures/sky_maps/starmap_2020_4k_11zon.jpg" id="4_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://dwndb4w8g4bov" path="res://scenes/celestial_bodies/saturn.tscn" id="5_tbgi4"]
 [ext_resource type="Script" uid="uid://ck2sliyjvdv2v" path="res://scripts/scene_switcher.gd" id="6_tefeu"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_sugp2"]
-panorama = ExtResource("2_0wfyh")
+panorama = ExtResource("4_o6xl0")
 
 [sub_resource type="Sky" id="Sky_0wfyh"]
 sky_material = SubResource("PanoramaSkyMaterial_sugp2")

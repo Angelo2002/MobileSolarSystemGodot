@@ -3,12 +3,12 @@
 [ext_resource type="Script" uid="uid://bxcd2n4r4a83i" path="res://scripts/camera_link.gd" id="1_pl1qn"]
 [ext_resource type="PackedScene" uid="uid://dwndb4w8g4bov" path="res://scenes/celestial_bodies/saturn.tscn" id="2_3t8jl"]
 [ext_resource type="Script" uid="uid://mynxlpyy7ugl" path="res://scripts/planet_positioning.gd" id="3_2nx0u"]
-[ext_resource type="Texture2D" uid="uid://bqj865p7bc04x" path="res://textures/sky_maps/starmap_2020_4k.exr" id="4_dhmct"]
+[ext_resource type="Texture2D" uid="uid://cltaq6w68lodb" path="res://textures/sky_maps/starmap_2020_4k_11zon.jpg" id="4_12gjn"]
 [ext_resource type="Script" uid="uid://c8luh6x83sbe1" path="res://scripts/rotating_skybox.gd" id="5_12gjn"]
 [ext_resource type="Script" uid="uid://cd0p327cyoo1q" path="res://scripts/sun_orbit_controller.gd" id="7_vfop5"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_vfop5"]
-panorama = ExtResource("4_dhmct")
+panorama = ExtResource("4_12gjn")
 
 [sub_resource type="Sky" id="Sky_pcm3g"]
 sky_material = SubResource("PanoramaSkyMaterial_vfop5")
