@@ -60,8 +60,8 @@ shader_parameter/fresnel_power = 2.0
 render_priority = 0
 shader = ExtResource("2_4knx4")
 shader_parameter/ring_texture = ExtResource("3_6oyq6")
-shader_parameter/inner_radius = 0.10000000475
-shader_parameter/outer_radius = 0.2430000115425
+shader_parameter/inner_radius = 0.082000003895
+shader_parameter/outer_radius = 0.310000014725
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_3cjbg"]
 
@@ -80,6 +80,6 @@ transform = Transform3D(1.135, 0, 0, 0, 1.135, 0, 0, 0, 1.135, 0, 0, 0)
 shape = SubResource("SphereShape3D_4knx4")
 
 [node name="Rings" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.515, 0, 0, 0, 2.515, 0, 0, 0, 2.515, 0, 0, 0)
+transform = Transform3D(2.005, 0, 0, 0, 2.005, 0, 0, 0, 2.005, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_jsrpf")
 mesh = SubResource("PlaneMesh_3cjbg")

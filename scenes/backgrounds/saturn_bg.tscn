@@ -5,35 +5,34 @@
 [ext_resource type="Script" uid="uid://mynxlpyy7ugl" path="res://scripts/planet_positioning.gd" id="3_2nx0u"]
 [ext_resource type="Texture2D" uid="uid://cltaq6w68lodb" path="res://textures/sky_maps/starmap_2020_4k_11zon.jpg" id="4_12gjn"]
 [ext_resource type="Script" uid="uid://c8luh6x83sbe1" path="res://scripts/rotating_skybox.gd" id="5_12gjn"]
-[ext_resource type="Script" uid="uid://cd0p327cyoo1q" path="res://scripts/sun_orbit_controller.gd" id="7_vfop5"]
+[ext_resource type="Script" uid="uid://d22qqkcajiloc" path="res://scripts/sun_positioning.gd" id="6_12gjn"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_vfop5"]
 panorama = ExtResource("4_12gjn")
 
-[sub_resource type="Sky" id="Sky_pcm3g"]
+[sub_resource type="Sky" id="Sky_vfop5"]
 sky_material = SubResource("PanoramaSkyMaterial_vfop5")
 
 [sub_resource type="Environment" id="Environment_h855p"]
 background_mode = 2
-sky = SubResource("Sky_pcm3g")
+sky = SubResource("Sky_vfop5")
 ambient_light_source = 3
 ambient_light_sky_contribution = 0.0
 glow_bloom = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h855p"]
-emission_enabled = true
-emission = Color(1, 1, 0, 1)
-emission_energy_multiplier = 5.4
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_12gjn"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_prymm"]
-material = SubResource("StandardMaterial3D_h855p")
+material = SubResource("StandardMaterial3D_12gjn")
 
 [node name="SaturnBG" type="Node3D"]
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1.0000007, 0, 0, 0, 1, 0, 0, 0, 0.99999934, 0, 0.001, -0.135)
+[node name="CameraBG" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9781475, 0.20791167, 0, -0.20791167, 0.9781475, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraBG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.001, 0)
 script = ExtResource("1_pl1qn")
-rotation_offset_x = -14.0
 
 [node name="Saturn" parent="." instance=ExtResource("2_3t8jl")]
 transform = Transform3D(1, 0, 0, 0, 0.9999983, -0.001745328, 0, 0.001745328, 0.9999983, 0, 0, -2.2619631)
@@ -52,11 +51,11 @@ rotation_speed_z = 0.0
 
 [node name="Sun" type="Node3D" parent="WorldEnvironment" node_paths=PackedStringArray("skybox")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 120, 0, 0)
-script = ExtResource("7_vfop5")
+script = ExtResource("6_12gjn")
 skybox = NodePath("..")
 orbit_enabled = false
 orbital_speed_y = 0.0
-orbit_distance = 120.0
+distance_from_surface = 100.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="WorldEnvironment/Sun"]
 mesh = SubResource("SphereMesh_prymm")

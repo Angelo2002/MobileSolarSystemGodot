@@ -8,7 +8,7 @@
 [node name="view_saturn_I" type="Node3D" node_paths=PackedStringArray("sky_occluder", "background_camera", "foreground_light")]
 script = ExtResource("1_ttq3p")
 sky_occluder = NodePath("SubViewportContainer/SubViewport/SaturnBG/Saturn/StaticBody3D/SaturnSurface")
-background_camera = NodePath("SubViewportContainer/SubViewport/SaturnBG/Camera3D")
+background_camera = NodePath("SubViewportContainer/SubViewport/SaturnBG/CameraBG/Camera3D")
 foreground_light = NodePath("SubViewportContainer2/SubViewport/DirectionalLight3D")
 auto_calculate_radius = false
 occluder_radius = 35.0
@@ -18,8 +18,8 @@ penumbra_softness = 1.5
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 816.0
-offset_bottom = 546.0
+offset_right = -1.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
@@ -27,13 +27,13 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 own_world_3d = true
 handle_input_locally = false
-size = Vector2i(1968, 1194)
+size = Vector2i(1151, 649)
 render_target_update_mode = 4
 
 [node name="SaturnBG" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_67j3s")]
 
-[node name="Camera3D" parent="SubViewportContainer/SubViewport/SaturnBG" index="0" node_paths=PackedStringArray("target_camera")]
-target_camera = NodePath("../../../../SubViewportContainer2/SubViewport/SaturnView/CharacterBody3D/Camera3D")
+[node name="Camera3D" parent="SubViewportContainer/SubViewport/SaturnBG/CameraBG" index="0" node_paths=PackedStringArray("target_camera")]
+target_camera = NodePath("../../../../../SubViewportContainer2/SubViewport/SaturnView/CharacterBody3D/Camera3D")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("3_mc7ij")
@@ -42,10 +42,9 @@ script = ExtResource("3_mc7ij")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 7.0
-offset_top = 9.0
-offset_right = 808.0
-offset_bottom = 543.0
+offset_left = -1.0
+offset_top = 1.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
@@ -54,7 +53,7 @@ stretch = true
 own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(1953, 1182)
+size = Vector2i(1153, 648)
 render_target_update_mode = 4
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer2/SubViewport"]
