@@ -2,5 +2,5 @@
 .godot/
 /android/
 
-# Textures
-textures/
+# Textures - now committed to repo (16MB total, well under GitHub limits)
+# Previously ignored due to 30MB single texture, but current textures are small
