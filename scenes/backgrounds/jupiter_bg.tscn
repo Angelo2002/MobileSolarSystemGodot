@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bffqdyasxr31v"]
+
+[ext_resource type="PackedScene" uid="uid://bk3cn7fba1ys1" path="res://scenes/backgrounds/base_bg.tscn" id="1_6xnv8"]
+[ext_resource type="PackedScene" uid="uid://cfjth1asfwqf6" path="res://scenes/celestial_bodies/jupiter.tscn" id="2_k1g62"]
+[ext_resource type="Script" uid="uid://mynxlpyy7ugl" path="res://scripts/planet_positioning.gd" id="3_ys5nw"]
+
+[node name="JupiterBG" instance=ExtResource("1_6xnv8")]
+
+[node name="Jupiter" parent="." index="2" instance=ExtResource("2_k1g62")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6440618, 0, 0)
+script = ExtResource("3_ys5nw")
+distance_from_surface = 10.0
+apparent_size_degrees = 58.0
+mesh_diameter = 1.0
+
+[editable path="WorldEnvironment/SunBG"]

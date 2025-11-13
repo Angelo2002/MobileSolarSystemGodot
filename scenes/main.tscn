@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://4b73v4n6y0jj"]
+[gd_scene load_steps=17 format=3 uid="uid://4b73v4n6y0jj"]
 
 [ext_resource type="PackedScene" uid="uid://h604pogjucc2" path="res://scenes/celestial_bodies/earth.tscn" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://c3hr82gg85y2u" path="res://scripts/camera_orbit.gd" id="2_sugp2"]
@@ -7,6 +7,12 @@
 [ext_resource type="Texture2D" uid="uid://cltaq6w68lodb" path="res://textures/sky_maps/starmap_2020_4k_11zon.jpg" id="4_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://dwndb4w8g4bov" path="res://scenes/celestial_bodies/saturn.tscn" id="5_tbgi4"]
 [ext_resource type="Script" uid="uid://ck2sliyjvdv2v" path="res://scripts/scene_switcher.gd" id="6_tefeu"]
+[ext_resource type="PackedScene" uid="uid://cfjth1asfwqf6" path="res://scenes/celestial_bodies/jupiter.tscn" id="8_85g3d"]
+[ext_resource type="PackedScene" uid="uid://dbmo8e4aages7" path="res://scenes/celestial_bodies/mars.tscn" id="9_choun"]
+[ext_resource type="PackedScene" uid="uid://b2cgoaajj06e5" path="res://scenes/celestial_bodies/uranus.tscn" id="10_trceg"]
+[ext_resource type="PackedScene" uid="uid://bex3jref2v61m" path="res://scenes/celestial_bodies/neptune.tscn" id="11_a8y0u"]
+[ext_resource type="PackedScene" uid="uid://dafrqpya5vsja" path="res://scenes/celestial_bodies/mercury.tscn" id="12_jkv2x"]
+[ext_resource type="PackedScene" uid="uid://dkvahsqslvebl" path="res://scenes/celestial_bodies/venus.tscn" id="13_jbj1t"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_sugp2"]
 panorama = ExtResource("4_o6xl0")
@@ -23,7 +29,7 @@ ambient_light_source = 1
 [node name="Root" type="Node3D"]
 
 [node name="Earth" parent="." node_paths=PackedStringArray("orbit_target") instance=ExtResource("1_o5qli")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.689435, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.028018, 0, 0)
 script = ExtResource("2_tipki")
 orbit_target = NodePath("../Sun")
 orbital_speed = 0.815
@@ -44,7 +50,7 @@ environment = SubResource("Environment_sugp2")
 transform = Transform3D(4.25, 0, 0, 0, 4.25, 0, 0, 0, 4.25, 0, 0, 0)
 
 [node name="Saturn" parent="." node_paths=PackedStringArray("orbit_target") instance=ExtResource("5_tbgi4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.892, 0, 22.789)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0030994415, 0, 19.086626)
 script = ExtResource("2_tipki")
 orbit_target = NodePath("../Sun")
 
@@ -52,6 +58,24 @@ orbit_target = NodePath("../Sun")
 script = ExtResource("6_tefeu")
 target_scene = "uid://deinsgylv0y2l"
 clickable_mesh = NodePath("SaturnSurface")
+
+[node name="Jupiter" parent="." instance=ExtResource("8_85g3d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11.32475)
+
+[node name="Mars" parent="." instance=ExtResource("9_choun")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.114887, 0, -3.2876806)
+
+[node name="Uranus" parent="." instance=ExtResource("10_trceg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 25.33627)
+
+[node name="Neptune" parent="." instance=ExtResource("11_a8y0u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 34.539684)
+
+[node name="Mercury" parent="." instance=ExtResource("12_jkv2x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0304704, 0, -0.39514732)
+
+[node name="Venus" parent="." instance=ExtResource("13_jbj1t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.4700994, 0, 2.762154)
 
 [editable path="Earth"]
 [editable path="Saturn"]

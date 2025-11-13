@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://21uwc18ag0uo"]
+
+[ext_resource type="Shader" uid="uid://cpx2f26cgva50" path="res://shaders/sun_glare.gdshader" id="1_01rnd"]
+[ext_resource type="Texture2D" uid="uid://7g8bk134py1l" path="res://textures/celestial_bodies/8k_sun.jpg" id="2_orjjf"]
+[ext_resource type="Shader" uid="uid://bjbx3cefxrqan" path="res://shaders/sun_billboard_glare.gdshader" id="3_gv6wo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ec1bj"]
+render_priority = 0
+shader = ExtResource("1_01rnd")
+shader_parameter/sun_texture = ExtResource("2_orjjf")
+shader_parameter/sun_color = Color(1, 0.9, 0.7, 1)
+shader_parameter/brightness = 5.0
+shader_parameter/core_intensity = 1.5
+shader_parameter/turbulence_speed = 0.1
+shader_parameter/turbulence_amount = 0.03
+shader_parameter/flow_scale = 20.0
+shader_parameter/enable_extended_glow = true
+shader_parameter/glow_radius = 2.0
+shader_parameter/glow_intensity = 3.0
+shader_parameter/glow_falloff = 2.0
+shader_parameter/enable_flare = true
+shader_parameter/flare_color = Color(1, 0.6, 0.2, 1)
+shader_parameter/flare_intensity = 2.0
+shader_parameter/flare_power = 3.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+
+[sub_resource type="SphereMesh" id="SphereMesh_iiqxy"]
+material = SubResource("ShaderMaterial_ec1bj")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xlxom"]
+render_priority = 0
+shader = ExtResource("3_gv6wo")
+shader_parameter/glare_color = Color(1, 0.95, 0.85, 1)
+shader_parameter/glare_intensity = 4.77200022667
+shader_parameter/enable_bloom = true
+shader_parameter/bloom_radius = 1.45700006594762
+shader_parameter/bloom_softness = 5.0
+shader_parameter/bloom_intensity = 0.8450000401375
+shader_parameter/enable_starburst = true
+shader_parameter/ray_count = 4
+shader_parameter/ray_length = 1.5
+shader_parameter/ray_width = 0.05
+shader_parameter/ray_intensity = 1.5
+shader_parameter/ray_rotation = 0.0
+shader_parameter/enable_rotation = false
+shader_parameter/rotation_speed = 0.1
+shader_parameter/distance_fade = 1.0
+shader_parameter/occlusion_fade = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_j483h"]
+
+[node name="SunBG" type="Node3D"]
+
+[node name="SunMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_iiqxy")
+
+[node name="GlareBillboard" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_xlxom")
+mesh = SubResource("QuadMesh_j483h")

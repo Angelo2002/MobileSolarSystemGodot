@@ -1,29 +1,71 @@
-[gd_scene load_steps=12 format=3 uid="uid://caikovscmna3m"]
+[gd_scene load_steps=16 format=3 uid="uid://caikovscmna3m"]
 
 [ext_resource type="Script" uid="uid://bxcd2n4r4a83i" path="res://scripts/camera_link.gd" id="1_pl1qn"]
 [ext_resource type="PackedScene" uid="uid://dwndb4w8g4bov" path="res://scenes/celestial_bodies/saturn.tscn" id="2_3t8jl"]
 [ext_resource type="Script" uid="uid://mynxlpyy7ugl" path="res://scripts/planet_positioning.gd" id="3_2nx0u"]
 [ext_resource type="Texture2D" uid="uid://cltaq6w68lodb" path="res://textures/sky_maps/starmap_2020_4k_11zon.jpg" id="4_12gjn"]
 [ext_resource type="Script" uid="uid://c8luh6x83sbe1" path="res://scripts/rotating_skybox.gd" id="5_12gjn"]
-[ext_resource type="Script" uid="uid://d22qqkcajiloc" path="res://scripts/sun_positioning.gd" id="6_12gjn"]
+[ext_resource type="Script" uid="uid://b1kccjqxgo4eq" path="res://scripts/sun_controller.gd" id="6_vfop5"]
+[ext_resource type="Shader" uid="uid://cpx2f26cgva50" path="res://shaders/sun_glare.gdshader" id="7_h855p"]
+[ext_resource type="Shader" uid="uid://bjbx3cefxrqan" path="res://shaders/sun_billboard_glare.gdshader" id="7_vfop5"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_vfop5"]
 panorama = ExtResource("4_12gjn")
 
-[sub_resource type="Sky" id="Sky_vfop5"]
+[sub_resource type="Sky" id="Sky_h855p"]
 sky_material = SubResource("PanoramaSkyMaterial_vfop5")
 
 [sub_resource type="Environment" id="Environment_h855p"]
 background_mode = 2
-sky = SubResource("Sky_vfop5")
+sky = SubResource("Sky_h855p")
 ambient_light_source = 3
 ambient_light_sky_contribution = 0.0
 glow_bloom = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_12gjn"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_prymm"]
+render_priority = 0
+shader = ExtResource("7_h855p")
+shader_parameter/sun_color = Color(1, 0.9, 0.7, 1)
+shader_parameter/brightness = 0.0
+shader_parameter/core_intensity = 1.5
+shader_parameter/turbulence_speed = 0.1
+shader_parameter/turbulence_amount = 0.03
+shader_parameter/flow_scale = 20.0
+shader_parameter/enable_extended_glow = true
+shader_parameter/glow_radius = 2.0
+shader_parameter/glow_intensity = 3.0
+shader_parameter/glow_falloff = 2.0
+shader_parameter/enable_flare = true
+shader_parameter/flare_color = Color(1, 0.6, 0.2, 1)
+shader_parameter/flare_intensity = 2.0
+shader_parameter/flare_power = 3.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
 
 [sub_resource type="SphereMesh" id="SphereMesh_prymm"]
-material = SubResource("StandardMaterial3D_12gjn")
+material = SubResource("ShaderMaterial_prymm")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h855p"]
+render_priority = 0
+shader = ExtResource("7_vfop5")
+shader_parameter/glare_color = Color(1, 0.95, 0.85, 1)
+shader_parameter/glare_intensity = 4.77200022667
+shader_parameter/enable_bloom = true
+shader_parameter/bloom_radius = 0.67500002880262
+shader_parameter/bloom_softness = 5.0
+shader_parameter/bloom_intensity = 0.8450000401375
+shader_parameter/enable_starburst = true
+shader_parameter/ray_count = 4
+shader_parameter/ray_length = 1.5
+shader_parameter/ray_width = 0.05
+shader_parameter/ray_intensity = 1.5
+shader_parameter/ray_rotation = 0.0
+shader_parameter/enable_rotation = false
+shader_parameter/rotation_speed = 0.1
+shader_parameter/distance_fade = 1.0
+shader_parameter/occlusion_fade = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_prymm"]
 
 [node name="SaturnBG" type="Node3D"]
 
@@ -49,15 +91,28 @@ rotation_speed_x = 0.0
 rotation_speed_y = 8.0
 rotation_speed_z = 0.0
 
-[node name="Sun" type="Node3D" parent="WorldEnvironment" node_paths=PackedStringArray("skybox")]
+[node name="Sun" type="Node3D" parent="WorldEnvironment" node_paths=PackedStringArray("camera", "billboard", "sun_mesh", "occluders", "skybox")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 120, 0, 0)
-script = ExtResource("6_12gjn")
+script = ExtResource("6_vfop5")
+camera = NodePath("../../CameraBG/Camera3D")
+billboard = NodePath("GlareBillboard")
+sun_mesh = NodePath("SunMesh")
+billboard_base_scale = 54.975
+enable_distance_scaling = false
+min_distance = 114.145
+max_scale = 271.22
+occluders = [NodePath("../../Saturn")]
 skybox = NodePath("..")
 orbit_enabled = false
 orbital_speed_y = 0.0
 distance_from_surface = 100.0
+apparent_size_degrees = 0.3
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldEnvironment/Sun"]
+[node name="SunMesh" type="MeshInstance3D" parent="WorldEnvironment/Sun"]
 mesh = SubResource("SphereMesh_prymm")
+
+[node name="GlareBillboard" type="MeshInstance3D" parent="WorldEnvironment/Sun"]
+material_override = SubResource("ShaderMaterial_h855p")
+mesh = SubResource("QuadMesh_prymm")
 
 [editable path="Saturn"]

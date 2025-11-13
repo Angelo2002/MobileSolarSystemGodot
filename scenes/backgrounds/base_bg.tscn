@@ -1,0 +1,41 @@
+[gd_scene load_steps=9 format=3 uid="uid://bk3cn7fba1ys1"]
+
+[ext_resource type="Script" uid="uid://bxcd2n4r4a83i" path="res://scripts/camera_link.gd" id="1_db0be"]
+[ext_resource type="Texture2D" uid="uid://cltaq6w68lodb" path="res://textures/sky_maps/starmap_2020_4k_11zon.jpg" id="2_1sljw"]
+[ext_resource type="Script" uid="uid://c8luh6x83sbe1" path="res://scripts/rotating_skybox.gd" id="3_8371p"]
+[ext_resource type="Script" uid="uid://b1kccjqxgo4eq" path="res://scripts/sun_controller.gd" id="4_1sljw"]
+[ext_resource type="PackedScene" uid="uid://21uwc18ag0uo" path="res://scenes/backgrounds/sun_bg_body.tscn" id="4_db0be"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_pmid5"]
+panorama = ExtResource("2_1sljw")
+
+[sub_resource type="Sky" id="Sky_vfop5"]
+sky_material = SubResource("PanoramaSkyMaterial_pmid5")
+
+[sub_resource type="Environment" id="Environment_2oyts"]
+background_mode = 2
+sky = SubResource("Sky_vfop5")
+ambient_light_source = 3
+ambient_light_sky_contribution = 0.0
+glow_bloom = 1.0
+
+[node name="BaseBG" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1.0000007, 0, 0, 0, 1, 0, 0, 0, 0.99999934, 0, 0.001, -0.135)
+script = ExtResource("1_db0be")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2oyts")
+script = ExtResource("3_8371p")
+rotation_speed_x = 0.0
+rotation_speed_y = 8.0
+rotation_speed_z = 0.0
+
+[node name="SunBG" parent="WorldEnvironment" instance=ExtResource("4_db0be")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.718417, 0, 0)
+script = ExtResource("4_1sljw")
+distance_from_surface = 100.0
+apparent_size_degrees = 0.895
+
+[editable path="WorldEnvironment/SunBG"]

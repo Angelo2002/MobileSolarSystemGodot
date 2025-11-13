@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=3 uid="uid://chbsxek6slr74"]
+
+[ext_resource type="Script" uid="uid://bi7r0f4tpj7or" path="res://scripts/synced_directional_light.gd" id="1_fjmjt"]
+
+[node name="PlanetViewBase" type="Node3D"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 816.0
+offset_bottom = 546.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+own_world_3d = true
+handle_input_locally = false
+size = Vector2i(1968, 1194)
+render_target_update_mode = 4
+
+[node name="BackgroundLight" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("1_fjmjt")
+
+[node name="Background" type="Node3D" parent="SubViewportContainer/SubViewport"]
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 9.0
+offset_right = 808.0
+offset_bottom = 543.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer2"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1953, 1182)
+render_target_update_mode = 4
+
+[node name="ForegroundLight" type="DirectionalLight3D" parent="SubViewportContainer2/SubViewport"]
+script = ExtResource("1_fjmjt")
+
+[node name="Surface" type="Node3D" parent="SubViewportContainer2/SubViewport"]

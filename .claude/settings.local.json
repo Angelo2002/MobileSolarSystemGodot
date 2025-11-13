@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:docs.godotengine.org)"
+      "WebFetch(domain:docs.godotengine.org)",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []
