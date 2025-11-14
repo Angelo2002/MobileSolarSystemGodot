@@ -6,11 +6,16 @@
 
 [node name="JupiterBG" instance=ExtResource("1_6xnv8")]
 
+[node name="WorldEnvironment" parent="." index="0"]
+rotation_speed_y = 24.0
+
+[node name="Node3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.8892328, 0.45745492, 0, -0.45745492, 0.8892328, 0, 0, 0)
+
 [node name="Jupiter" parent="." index="2" instance=ExtResource("2_k1g62")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6440618, 0, 0)
 script = ExtResource("3_ys5nw")
 distance_from_surface = 10.0
-apparent_size_degrees = 58.0
-mesh_diameter = 1.0
+apparent_size_degrees = 58.5
 
 [editable path="WorldEnvironment/SunBG"]

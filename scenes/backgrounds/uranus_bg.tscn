@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://drwwt3d3ytsbo"]
+
+[ext_resource type="PackedScene" uid="uid://bk3cn7fba1ys1" path="res://scenes/backgrounds/base_bg.tscn" id="1_3sxjt"]
+[ext_resource type="PackedScene" uid="uid://b2cgoaajj06e5" path="res://scenes/celestial_bodies/uranus.tscn" id="2_dsumi"]
+[ext_resource type="Script" uid="uid://mynxlpyy7ugl" path="res://scripts/planet_positioning.gd" id="3_5p17r"]
+
+[node name="UranusBG" instance=ExtResource("1_3sxjt")]
+
+[node name="Uranus" parent="." index="2" instance=ExtResource("2_dsumi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.177867, 0, 0)
+script = ExtResource("3_5p17r")
+distance_from_surface = 10.0
+apparent_size_degrees = 55.0
+
+[editable path="WorldEnvironment/SunBG"]

@@ -1,0 +1,25 @@
+[remap]
+
+importer="cubemap_texture"
+type="CompressedCubemap"
+uid="uid://bxgmf3cj7sshp"
+path="res://.godot/imported/star_constellation_cubemap.jpg-a938662ff19bd6faa443161b7430f12f.ccube"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://textures/star_constellation_cubemap.jpg"
+dest_files=["res://.godot/imported/star_constellation_cubemap.jpg-a938662ff19bd6faa443161b7430f12f.ccube"]
+
+[params]
+
+compress/mode=0
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+slices/arrangement=3

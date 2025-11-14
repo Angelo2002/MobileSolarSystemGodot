@@ -1,5 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://c7ssr3e2ndw2"]
+[gd_scene load_steps=4 format=3 uid="uid://c7ssr3e2ndw2"]
 
 [ext_resource type="PackedScene" uid="uid://chbsxek6slr74" path="res://scenes/views/planet_view_base.tscn" id="1_rbno8"]
+[ext_resource type="PackedScene" uid="uid://bffqdyasxr31v" path="res://scenes/backgrounds/jupiter_bg.tscn" id="2_leggi"]
+[ext_resource type="PackedScene" uid="uid://bmotuhnjh172x" path="res://scenes/land/jupiter_metis.tscn" id="3_7vnts"]
 
 [node name="ViewJupiterI" instance=ExtResource("1_rbno8")]
+
+[node name="JupiterBG" parent="SubViewportContainer/SubViewport/Background" index="0" instance=ExtResource("2_leggi")]
+
+[node name="Camera3D" parent="SubViewportContainer/SubViewport/Background/JupiterBG/Node3D" index="0" node_paths=PackedStringArray("target_camera")]
+target_camera = NodePath("../../../../../../SubViewportContainer2/SubViewport/Surface/JupiterMetis/GenericLand/Player/CharacterBody3D/Camera3D")
+
+[node name="JupiterMetis" parent="SubViewportContainer2/SubViewport/Surface" index="0" instance=ExtResource("3_7vnts")]
+
+[editable path="SubViewportContainer/SubViewport/Background/JupiterBG"]
+[editable path="SubViewportContainer/SubViewport/Background/JupiterBG/WorldEnvironment/SunBG"]
+[editable path="SubViewportContainer2/SubViewport/Surface/JupiterMetis"]
+[editable path="SubViewportContainer2/SubViewport/Surface/JupiterMetis/GenericLand"]
+[editable path="SubViewportContainer2/SubViewport/Surface/JupiterMetis/GenericLand/Player"]
+[editable path="SubViewportContainer2/SubViewport/Surface/JupiterMetis/GenericLand/GenericSurface"]

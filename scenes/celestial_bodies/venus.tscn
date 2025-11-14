@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dkvahsqslvebl"]
+[gd_scene load_steps=5 format=3 uid="uid://dkvahsqslvebl"]
 
 [ext_resource type="Texture2D" uid="uid://b6ftm1t0l6w5m" path="res://textures/celestial_bodies/other_planets/2k_venus_atmosphere.jpg" id="1_1ucgw"]
 
@@ -7,8 +7,16 @@ albedo_texture = ExtResource("1_1ucgw")
 
 [sub_resource type="SphereMesh" id="SphereMesh_xwevf"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_dqphi"]
+
 [node name="Venus" type="Node3D"]
 
 [node name="VenusAtmosphere" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_dmmqf")
 mesh = SubResource("SphereMesh_xwevf")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1.01, 0, 0, 0, 1.01, 0, 0, 0, 1.01, 0, 0, 0)
+shape = SubResource("SphereShape3D_dqphi")

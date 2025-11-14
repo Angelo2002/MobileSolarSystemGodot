@@ -33,7 +33,7 @@ render_target_update_mode = 4
 [node name="SaturnBG" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_67j3s")]
 
 [node name="Camera3D" parent="SubViewportContainer/SubViewport/SaturnBG/CameraBG" index="0" node_paths=PackedStringArray("target_camera")]
-target_camera = NodePath("../../../../../SubViewportContainer2/SubViewport/SaturnView/CharacterBody3D/Camera3D")
+target_camera = NodePath("../../../../../SubViewportContainer2/SubViewport/SaturnView/Player/CharacterBody3D/Camera3D")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("3_mc7ij")
@@ -63,5 +63,7 @@ script = ExtResource("3_mc7ij")
 
 [editable path="SubViewportContainer/SubViewport/SaturnBG"]
 [editable path="SubViewportContainer/SubViewport/SaturnBG/Saturn"]
+[editable path="SubViewportContainer/SubViewport/SaturnBG/WorldEnvironment/SunBG"]
 [editable path="SubViewportContainer2/SubViewport/SaturnView"]
 [editable path="SubViewportContainer2/SubViewport/SaturnView/Saturn_I"]
+[editable path="SubViewportContainer2/SubViewport/SaturnView/Player"]

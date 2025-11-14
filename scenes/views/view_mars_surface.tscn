@@ -1,0 +1,34 @@
+[gd_scene load_steps=8 format=3 uid="uid://dey1kh7cwqtc"]
+
+[ext_resource type="Shader" uid="uid://0i82hyet5lfj" path="res://shaders/mars_sky.gdshader" id="1_pdtxl"]
+[ext_resource type="Texture2D" uid="uid://vyf22iyy47ek" path="res://textures/gradients/mars_view_zenith_gradient.png" id="2_bthms"]
+[ext_resource type="Texture2D" uid="uid://dj8vrctuof3tj" path="res://textures/gradients/mars_sun_zenith_gradient.png" id="3_cvsuh"]
+[ext_resource type="Texture2D" uid="uid://diiy1ont8t6ck" path="res://textures/gradients/mars_sun_view_gradient.png" id="4_fi0we"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7wrgm"]
+shader = ExtResource("1_pdtxl")
+shader_parameter/sun_zenith_gradient = ExtResource("3_cvsuh")
+shader_parameter/view_zenith_gradient = ExtResource("4_fi0we")
+shader_parameter/sun_view_gradient = ExtResource("2_bthms")
+shader_parameter/sun_radius = 0.0070000003325
+shader_parameter/sun_color = Color(1, 0.95, 0.85, 1)
+shader_parameter/star_exposure = 1.5
+shader_parameter/star_power = 3.0
+shader_parameter/star_latitude = 0.0
+shader_parameter/star_rotation_speed = 0.1
+shader_parameter/constellation_color = Color(0.5, 0.7, 1, 1)
+shader_parameter/dust_opacity = 0.6
+shader_parameter/star_day_visibility = 0.3
+shader_parameter/sun_dir = Vector3(0, 1, 0)
+
+[sub_resource type="Sky" id="Sky_435bc"]
+sky_material = SubResource("ShaderMaterial_7wrgm")
+
+[sub_resource type="Environment" id="Environment_w6vls"]
+background_mode = 2
+sky = SubResource("Sky_435bc")
+
+[node name="MarsView" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_w6vls")

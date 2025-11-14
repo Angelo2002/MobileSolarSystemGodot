@@ -1,0 +1,7 @@
+-Implementar lunas de planetas
+-implementar atmosfera (montañas?)
+-hacer tierra
+-cargar billboard
+-cargar teletransportador
+-ambiente para la tierra (sonidos)
+-etiquetas para los planetas

@@ -21,10 +21,6 @@ glow_bloom = 1.0
 
 [node name="BaseBG" type="Node3D"]
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1.0000007, 0, 0, 0, 1, 0, 0, 0, 0.99999934, 0, 0.001, -0.135)
-script = ExtResource("1_db0be")
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_2oyts")
 script = ExtResource("3_8371p")
@@ -32,10 +28,22 @@ rotation_speed_x = 0.0
 rotation_speed_y = 8.0
 rotation_speed_z = 0.0
 
-[node name="SunBG" parent="WorldEnvironment" instance=ExtResource("4_db0be")]
+[node name="SunBG" parent="WorldEnvironment" node_paths=PackedStringArray("camera", "billboard", "sun_mesh", "skybox") instance=ExtResource("4_db0be")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.718417, 0, 0)
 script = ExtResource("4_1sljw")
+camera = NodePath("../../Node3D/Camera3D")
+billboard = NodePath("GlareBillboard")
+sun_mesh = NodePath("SunMesh")
+enable_occlusion = true
+skybox = NodePath("..")
 distance_from_surface = 100.0
-apparent_size_degrees = 0.895
+apparent_size_degrees = 0.1
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.8744674, 0.48508438, 0, -0.48508438, 0.8744674, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.001, -0.135)
+script = ExtResource("1_db0be")
 
 [editable path="WorldEnvironment/SunBG"]

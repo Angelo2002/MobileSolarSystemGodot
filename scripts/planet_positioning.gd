@@ -42,8 +42,8 @@ extends "res://scripts/planet_rotation.gd"
 		_update_planet_transform()
 
 ## Reference size of the planet mesh (the diameter of the mesh at scale 1,1,1)
-## Default assumes a sphere mesh with diameter of 2 units
-@export var mesh_diameter: float = 2.0:
+## Default assumes a sphere mesh with diameter of 1 units
+@export var mesh_diameter: float = 1.0:
 	set(value):
 		mesh_diameter = value
 		_update_planet_transform()

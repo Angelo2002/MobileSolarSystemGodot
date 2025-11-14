@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bex3jref2v61m"]
+[gd_scene load_steps=5 format=3 uid="uid://bex3jref2v61m"]
 
 [ext_resource type="Texture2D" uid="uid://qb4vslrw7uyn" path="res://textures/celestial_bodies/other_planets/2k_neptune.jpg" id="1_ftvcj"]
 
@@ -7,8 +7,16 @@ albedo_texture = ExtResource("1_ftvcj")
 
 [sub_resource type="SphereMesh" id="SphereMesh_jr4a6"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_2mfpj"]
+
 [node name="Neptune" type="Node3D"]
 
 [node name="NeptuneSurface" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_whiey")
 mesh = SubResource("SphereMesh_jr4a6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1.01, 0, 0, 0, 1.01, 0, 0, 0, 1.01, 0, 0, 0)
+shape = SubResource("SphereShape3D_2mfpj")

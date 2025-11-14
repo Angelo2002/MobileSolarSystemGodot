@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://0afcj00vy66"]
+
+[ext_resource type="PackedScene" uid="uid://chbsxek6slr74" path="res://scenes/views/planet_view_base.tscn" id="1_22sjn"]
+[ext_resource type="PackedScene" uid="uid://drwwt3d3ytsbo" path="res://scenes/backgrounds/uranus_bg.tscn" id="2_62yr0"]
+[ext_resource type="PackedScene" uid="uid://cgy61540uirqr" path="res://scenes/land/uranus_cordelia.tscn" id="3_emyao"]
+
+[node name="PlanetViewBase" instance=ExtResource("1_22sjn")]
+
+[node name="UranusBG" parent="SubViewportContainer/SubViewport/Background" index="0" instance=ExtResource("2_62yr0")]
+
+[node name="SunBG" parent="SubViewportContainer/SubViewport/Background/UranusBG/WorldEnvironment" index="0"]
+enable_occlusion = false
+
+[node name="Camera3D" parent="SubViewportContainer/SubViewport/Background/UranusBG/Node3D" index="0" node_paths=PackedStringArray("target_camera")]
+target_camera = NodePath("../../../../../../SubViewportContainer2/SubViewport/Surface/CordeliaLand/Player/CharacterBody3D/Camera3D")
+
+[node name="CordeliaLand" parent="SubViewportContainer2/SubViewport/Surface" index="0" instance=ExtResource("3_emyao")]
+
+[node name="Player" parent="SubViewportContainer2/SubViewport/Surface/CordeliaLand" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.533655, 0)
+
+[node name="StaticBody3D" parent="SubViewportContainer2/SubViewport/Surface/CordeliaLand/GenericSurface" index="1"]
+visible = true
+
+[editable path="SubViewportContainer/SubViewport/Background/UranusBG"]
+[editable path="SubViewportContainer/SubViewport/Background/UranusBG/WorldEnvironment/SunBG"]
+[editable path="SubViewportContainer2/SubViewport/Surface/CordeliaLand"]
+[editable path="SubViewportContainer2/SubViewport/Surface/CordeliaLand/Player"]
+[editable path="SubViewportContainer2/SubViewport/Surface/CordeliaLand/GenericSurface"]

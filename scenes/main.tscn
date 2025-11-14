@@ -49,6 +49,9 @@ environment = SubResource("Environment_sugp2")
 [node name="Sun" parent="." instance=ExtResource("4_jyhfs")]
 transform = Transform3D(4.25, 0, 0, 0, 4.25, 0, 0, 0, 4.25, 0, 0, 0)
 
+[node name="OmniLight3D" parent="Sun" index="1"]
+light_energy = 1.777
+
 [node name="Saturn" parent="." node_paths=PackedStringArray("orbit_target") instance=ExtResource("5_tbgi4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0030994415, 0, 19.086626)
 script = ExtResource("2_tipki")
@@ -78,4 +81,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0304704, 0, -0.39514732)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.4700994, 0, 2.762154)
 
 [editable path="Earth"]
+[editable path="Sun"]
 [editable path="Saturn"]
