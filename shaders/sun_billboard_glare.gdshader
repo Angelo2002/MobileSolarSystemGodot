@@ -1,9 +1,10 @@
 shader_type spatial;
-render_mode unshaded, blend_add, depth_test_disabled, cull_disabled;
+render_mode unshaded, blend_add, cull_disabled;
 
 // === CORE GLARE PROPERTIES ===
 uniform vec3 glare_color : source_color = vec3(1.0, 0.95, 0.85);
 uniform float glare_intensity : hint_range(0.0, 10.0) = 1.0;
+uniform float billboard_scale : hint_range(0.1, 20.0) = 5.0; // Controls the actual drawable size
 
 // === RADIAL BLOOM ===
 uniform bool enable_bloom = true;
@@ -35,6 +36,10 @@ void vertex() {
 		INV_VIEW_MATRIX[2],
 		MODEL_MATRIX[3]
 	);
+
+	// Scale the billboard to control drawable area size
+	// This allows the glare to extend beyond the base mesh geometry
+	VERTEX *= billboard_scale;
 }
 
 void fragment() {
