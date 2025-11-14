@@ -1,8 +1,27 @@
-[gd_scene load_steps=4 format=3 uid="uid://0afcj00vy66"]
+[gd_scene load_steps=8 format=3 uid="uid://0afcj00vy66"]
 
 [ext_resource type="PackedScene" uid="uid://chbsxek6slr74" path="res://scenes/views/planet_view_base.tscn" id="1_22sjn"]
 [ext_resource type="PackedScene" uid="uid://drwwt3d3ytsbo" path="res://scenes/backgrounds/uranus_bg.tscn" id="2_62yr0"]
-[ext_resource type="PackedScene" uid="uid://cgy61540uirqr" path="res://scenes/land/uranus_cordelia.tscn" id="3_emyao"]
+[ext_resource type="PackedScene" uid="uid://ripmm6dglhv5" path="res://scenes/land/generic_land.tscn" id="3_22sjn"]
+[ext_resource type="Shader" uid="uid://sgc6et1yjrho" path="res://shaders/color_filter.gdshader" id="4_o1f8r"]
+[ext_resource type="Texture2D" uid="uid://cpiiy06bujc5v" path="res://Meshes/textures/SaturnIAlbedo.png" id="5_y5gn3"]
+[ext_resource type="Texture2D" uid="uid://8xwqclsg043b" path="res://Meshes/textures/SaturnINormal.png" id="6_u18re"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_geslw"]
+render_priority = 0
+shader = ExtResource("4_o1f8r")
+shader_parameter/base_texture = ExtResource("5_y5gn3")
+shader_parameter/normal_map = ExtResource("6_u18re")
+shader_parameter/normal_strength = 1.0
+shader_parameter/hue_shift = 8.00000038
+shader_parameter/tint_color = Color(0.45882353, 0.11372549, 1, 1)
+shader_parameter/tint_intensity = 0.3330000158175
+shader_parameter/saturation = 0.0670000031825
+shader_parameter/brightness = 0.0
+shader_parameter/contrast = 1.0
+shader_parameter/roughness = 0.8
+shader_parameter/metallic = 0.0
+shader_parameter/specular = 0.5
 
 [node name="PlanetViewBase" instance=ExtResource("1_22sjn")]
 
@@ -12,18 +31,15 @@
 enable_occlusion = false
 
 [node name="Camera3D" parent="SubViewportContainer/SubViewport/Background/UranusBG/Node3D" index="0" node_paths=PackedStringArray("target_camera")]
-target_camera = NodePath("../../../../../../SubViewportContainer2/SubViewport/Surface/CordeliaLand/Player/CharacterBody3D/Camera3D")
+target_camera = NodePath("../../../../../../SubViewportContainer2/SubViewport/Surface/GenericLand/Player/CharacterBody3D/Camera3D")
 
-[node name="CordeliaLand" parent="SubViewportContainer2/SubViewport/Surface" index="0" instance=ExtResource("3_emyao")]
+[node name="GenericLand" parent="SubViewportContainer2/SubViewport/Surface" index="0" instance=ExtResource("3_22sjn")]
 
-[node name="Player" parent="SubViewportContainer2/SubViewport/Surface/CordeliaLand" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.533655, 0)
-
-[node name="StaticBody3D" parent="SubViewportContainer2/SubViewport/Surface/CordeliaLand/GenericSurface" index="1"]
-visible = true
+[node name="Plane" parent="SubViewportContainer2/SubViewport/Surface/GenericLand/Saturn_I" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_geslw")
 
 [editable path="SubViewportContainer/SubViewport/Background/UranusBG"]
 [editable path="SubViewportContainer/SubViewport/Background/UranusBG/WorldEnvironment/SunBG"]
-[editable path="SubViewportContainer2/SubViewport/Surface/CordeliaLand"]
-[editable path="SubViewportContainer2/SubViewport/Surface/CordeliaLand/Player"]
-[editable path="SubViewportContainer2/SubViewport/Surface/CordeliaLand/GenericSurface"]
+[editable path="SubViewportContainer2/SubViewport/Surface/GenericLand"]
+[editable path="SubViewportContainer2/SubViewport/Surface/GenericLand/Player"]
+[editable path="SubViewportContainer2/SubViewport/Surface/GenericLand/Saturn_I"]

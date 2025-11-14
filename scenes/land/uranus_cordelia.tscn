@@ -1,34 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cgy61540uirqr"]
+[gd_scene load_steps=2 format=3 uid="uid://cgy61540uirqr"]
 
 [ext_resource type="PackedScene" uid="uid://ripmm6dglhv5" path="res://scenes/land/generic_land.tscn" id="1_dh3c3"]
-[ext_resource type="Shader" uid="uid://sgc6et1yjrho" path="res://shaders/color_filter.gdshader" id="2_m7rfn"]
-[ext_resource type="Texture2D" uid="uid://betpl3pkcb3dk" path="res://Meshes/textures/MetisSurface.png" id="3_5fvlq"]
-[ext_resource type="Texture2D" uid="uid://dooyme5eg1jpw" path="res://Meshes/textures/MetisSurfaceNormal.png" id="4_8hond"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dh3c3"]
-render_priority = 0
-shader = ExtResource("2_m7rfn")
-shader_parameter/base_texture = ExtResource("3_5fvlq")
-shader_parameter/normal_map = ExtResource("4_8hond")
-shader_parameter/normal_strength = 1.0
-shader_parameter/hue_shift = 0.0
-shader_parameter/tint_color = Color(1, 1, 1, 1)
-shader_parameter/tint_intensity = 0.0
-shader_parameter/saturation = 0.4770000226575
-shader_parameter/brightness = 0.0
-shader_parameter/contrast = 1.0
-shader_parameter/roughness = 0.8
-shader_parameter/metallic = 0.0
-shader_parameter/specular = 0.5
 
 [node name="CordeliaLand" instance=ExtResource("1_dh3c3")]
 
-[node name="Plane" parent="GenericSurface" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.381507, -5.695587, 0.53325653)
-surface_material_override/0 = SubResource("ShaderMaterial_dh3c3")
-
-[node name="StaticBody3D" parent="GenericSurface" index="1"]
-visible = false
-
 [editable path="Player"]
-[editable path="GenericSurface"]
+[editable path="Saturn_I"]
